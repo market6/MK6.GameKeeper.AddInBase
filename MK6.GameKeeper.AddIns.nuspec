@@ -14,6 +14,6 @@
         </frameworkAssemblies>
     </metadata>
     <files>
-        <file src="Mbin\Release\MK6.GameKeeper.AddIns.dll" target="lib\net451" />
+        <file src="MK6.GameKeeper.AddIns\bin\Release\MK6.GameKeeper.AddIns.dll" target="lib\net451" />
     </files>
 </package>
