@@ -1,0 +1,60 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+      <AssemblyExtension Condition="$(OutputType) == 'Exe'">exe</AssemblyExtension>
+      <AssemblyExtension Condition="$(OutputType) == 'Library'">dll</AssemblyExtension>
+    </PropertyGroup>
+    <UsingTask TaskName="UpdateGameKeeperServiceVersionToCurrentTimestamp" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+        <ParameterGroup>
+            <Path ParameterType="System.String" Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.Text.RegularExpressions" />
+            <Code Type="Fragment" Language="cs">
+                <![CDATA[
+                    string content = File.ReadAllText(Path);
+                    content = Regex.Replace(content, @"Version\s?=\s?"".*""", @"Version = """ + DateTime.Now.ToString("y.M.d.Hmm") + @"""");
+                    File.WriteAllText(Path, content);
+                ]]>
+            </Code>
+        </Task>
+    </UsingTask>
+    <UsingTask TaskName="UpdateGameKeeperServiceVersion" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+        <ParameterGroup>
+            <Path ParameterType="System.String" Required="true" />
+            <Version ParameterType="System.String" Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.Text.RegularExpressions" />
+            <Code Type="Fragment" Language="cs">
+                <![CDATA[
+                    string content = File.ReadAllText(Path);
+                    content = Regex.Replace(content, @"Version\s?=\s?"".*""", @"Version = """ + Version + @"""");
+                    File.WriteAllText(Path, content);
+                ]]>
+            </Code>
+        </Task>
+    </UsingTask>
+    <UsingTask TaskName="CopyTransformsToOutput" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+        <ParameterGroup>
+            <Transforms ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+            <OutputFolder Required="true" />
+            <TransformNameBase Required="true" />
+            <NewNameBase Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.IO" />
+            <Using Namespace="System.Text.RegularExpressions" />
+            <Code Type="Fragment" Language="cs">
+                <![CDATA[
+                    foreach (var transform in Transforms)
+                    {
+                        var outputFileName = transform.ItemSpec.Replace(TransformNameBase, NewNameBase);
+                        var outputFilePath = Path.Combine(OutputFolder,  outputFileName);
+                        Log.LogMessage("Copying " + transform + " to " + outputFilePath);
+                        File.Copy(transform.ItemSpec, outputFilePath, true);
+                    }
+                ]]>
+            </Code>
+        </Task>
+    </UsingTask>
+</Project>

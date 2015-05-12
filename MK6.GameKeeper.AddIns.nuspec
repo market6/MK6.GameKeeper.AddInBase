@@ -15,6 +15,7 @@
   </metadata>
   <files>
     <file src="MK6.GameKeeper.AddIns\bin\Release\MK6.GameKeeper.AddIns.dll" target="lib\net451" />
-    <file src="Install.ps1" target="tools" />
+    <file src="Tools\Install.ps1" target="tools" />
+    <file src="Tools\MK6.GameKeeper.AddIns.targets" target="tools" />
   </files>
 </package>
