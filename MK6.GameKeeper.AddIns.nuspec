@@ -12,10 +12,16 @@
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.AddIn" targetFramework="net40" />
     </frameworkAssemblies>
+    <references>
+      <reference file="MK6.GameKeeper.AddIns.dll" />
+    </references>
   </metadata>
   <files>
-    <file src="MK6.GameKeeper.AddIns\bin\Release\MK6.GameKeeper.AddIns.dll" target="lib\net451" />
+    <file src="MK6.GameKeeper.AddIns\bin\MK6.GameKeeper.AddIns.dll" target="lib\net451" />
     <file src="Tools\Install.ps1" target="tools" />
+    <file src="Tools\Uninstall.ps1" target="tools" />
     <file src="Tools\MK6.GameKeeper.AddIns.targets" target="tools" />
+    <file src="MK6.GameKeeper.Tasks\bin\MK6.GameKeeper.Tasks.dll" target="tools" />
+    <file src="Content\Service.cs.pp" target="content" />
   </files>
 </package>

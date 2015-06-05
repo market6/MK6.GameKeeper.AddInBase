@@ -5,10 +5,19 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MK6.GameKeeper.AddIns", "MK6.GameKeeper.AddIns\MK6.GameKeeper.AddIns.csproj", "{FE692892-4849-4762-9FF5-BA356116A287}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{720319BE-C5CE-4C00-9BF8-C5B438E9C8D2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Package", "Package", "{2D224B2D-C96F-4C13-AB4E-2D074C9AA932}"
 	ProjectSection(SolutionItems) = preProject
-		Install.ps1 = Install.ps1
+		Tools\Install.ps1 = Tools\Install.ps1
 		MK6.GameKeeper.AddIns.nuspec = MK6.GameKeeper.AddIns.nuspec
+		Tools\MK6.GameKeeper.AddIns.targets = Tools\MK6.GameKeeper.AddIns.targets
+		Tools\Uninstall.ps1 = Tools\Uninstall.ps1
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MK6.GameKeeper.Tasks", "MK6.GameKeeper.Tasks\MK6.GameKeeper.Tasks.csproj", "{EE13C7FE-965F-4547-BEC6-FA998221BC49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{7FD10CDF-D060-474C-88B7-BA24647FE593}"
+	ProjectSection(SolutionItems) = preProject
+		Content\Service.cs.pp = Content\Service.cs.pp
 	EndProjectSection
 EndProject
 Global
@@ -21,6 +30,10 @@ Global
 		{FE692892-4849-4762-9FF5-BA356116A287}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE692892-4849-4762-9FF5-BA356116A287}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE692892-4849-4762-9FF5-BA356116A287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE13C7FE-965F-4547-BEC6-FA998221BC49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE13C7FE-965F-4547-BEC6-FA998221BC49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE13C7FE-965F-4547-BEC6-FA998221BC49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE13C7FE-965F-4547-BEC6-FA998221BC49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
