@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Text.RegularExpressions;
 using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 
 namespace MK6.GameKeeper.Tasks
 {
@@ -15,7 +13,7 @@ namespace MK6.GameKeeper.Tasks
         public ITaskItem[] AssemblyFiles { get; set; }
 
         [Output]
-        public ITaskItem[] AssemblyVersionInfo { get; set; }
+        public string Version { get; set; }
 
         public override bool Execute()
         {
@@ -24,36 +22,34 @@ namespace MK6.GameKeeper.Tasks
                 return false;
             }
 
-            AssemblyVersionInfo = GetVersionInfoFromAssemblyFiles(AssemblyFiles).ToArray();
+            Version = GetVersionInfoFromAssemblyFiles(AssemblyFiles).FirstOrDefault();
+
             return true;
         }
 
-        private IEnumerable<ITaskItem> GetVersionInfoFromAssemblyFiles(IEnumerable<ITaskItem> assemblies)
+        private IEnumerable<string> GetVersionInfoFromAssemblyFiles(IEnumerable<ITaskItem> assemblies)
         {
             foreach (ITaskItem assembly in assemblies)
             {
                 LogMessage(String.Format("Get version info from assembly: {0}", assembly));
-                yield return CreateTaskItemFromAssemblyFile(assembly.ItemSpec);
+                var result = CreateTaskItemFromAssemblyFile(assembly.ItemSpec);
+                LogMessage(String.Format("Found version number: {0}", result));
+
+                yield return result;
             }
         }
 
-        private static TaskItem CreateTaskItemFromAssemblyFile(string path)
+        private static string CreateTaskItemFromAssemblyFile(string path)
         {
-            var info = FileVersionInfo.GetVersionInfo(path);
-            var assemblyVersion = AssemblyName.GetAssemblyName(info.FileName).Version;
+            var assemblyInfoFile = File.ReadAllText(path);
 
-            if (info.FileVersion != info.ProductVersion)
+            var version = Regex.Match(assemblyInfoFile, @"(?<=\[assembly:\s?AssemblyVersion\("")[\d\.]*?(?="")");
+            if (version.Success)
             {
-                return new TaskItem(info.FileName, new Hashtable()
-                {
-                    { "Version", info.ProductVersion }
-                });
+                return version.Value;
             }
 
-            return new TaskItem(info.FileName, new Hashtable()
-            {
-                { "Version", assemblyVersion.ToString() }
-            });
+            return String.Empty;
         }
     }
 }

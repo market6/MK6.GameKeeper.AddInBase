@@ -17,13 +17,17 @@
   </PropertyGroup>
   
   <Target Name="UpdateGameKeeperVersion" Condition="$(UpdateGameKeeperVersion)">
-    <GetAssemblyVersionInfo AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="AssemblyVersionInfo" ItemName="AssemblyVersions"/>
+    <ItemGroup>
+      <AssemblyInfo Include="**\AssemblyInfo.cs" />
+    </ItemGroup>
+    
+    <GetAssemblyVersionInfo AssemblyFiles="@(AssemblyInfo)">
+      <Output TaskParameter="Version" PropertyName="GameKeeperAssemblyVersion"/>
     </GetAssemblyVersionInfo>
     <PropertyGroup>
-      <GameKeeperServiceVersion Condition="'$(GameKeeperServiceVersion)' == ''">%(AssemblyVersions.Version)</GameKeeperServiceVersion>
+      <GameKeeperServiceVersion Condition="'$(GameKeeperServiceVersion)' == ''">$(GameKeeperAssemblyVersion)</GameKeeperServiceVersion>
     </PropertyGroup>
-    
+
     <Message Text="Using GameKeeper service version: $(GameKeeperServiceVersion)" />
 
     <UpdateGameKeeperAddInVersion CodeFiles="@(Compile)" Version="$(GameKeeperServiceVersion)" />
