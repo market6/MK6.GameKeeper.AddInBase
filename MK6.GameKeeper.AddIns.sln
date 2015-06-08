@@ -17,6 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MK6.GameKeeper.Tasks", "MK6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{7FD10CDF-D060-474C-88B7-BA24647FE593}"
 	ProjectSection(SolutionItems) = preProject
+		Content\readme.txt = Content\readme.txt
 		Content\Service.cs.pp = Content\Service.cs.pp
 	EndProjectSection
 EndProject

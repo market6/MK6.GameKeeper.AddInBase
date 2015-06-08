@@ -23,5 +23,6 @@
     <file src="Tools\MK6.GameKeeper.AddIns.targets" target="tools" />
     <file src="MK6.GameKeeper.Tasks\bin\MK6.GameKeeper.Tasks.dll" target="tools" />
     <file src="Content\Service.cs.pp" target="content" />
+    <file src="Content\readme.txt" target="" />
   </files>
 </package>
