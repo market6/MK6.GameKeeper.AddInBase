@@ -8,7 +8,7 @@ namespace $rootnamespace$
 	[AddIn(AddInName, Version = "1.0.0.0")]
 	public class Service : GameKeeperAddIn
 	{
-		public const string AddInName = "";
+		public const string AddInName = "$assemblyname$";
 
 		public Service()
 		{
