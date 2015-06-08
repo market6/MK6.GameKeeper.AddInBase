@@ -17,13 +17,4 @@ param($installPath, $toolsPath, $package, $project)
     $import = $msbuild.Xml.AddImport($relativePath)
     $import.Condition = "Exists('$relativePath')"
     
-    # Prevent AddIn dll from being copied locally
-    foreach ($reference in $project.Object.References)
-    {
-        if($reference.Name -eq $package.Id)
-        {
-            $reference.CopyLocal = $false;
-        }
-    }
-    
     $project.Save()

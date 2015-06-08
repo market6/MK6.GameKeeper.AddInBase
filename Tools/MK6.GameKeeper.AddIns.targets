@@ -2,12 +2,12 @@
   <UsingTask TaskName="GetAssemblyVersionInfo" AssemblyFile="MK6.GameKeeper.Tasks.dll" />
   <UsingTask TaskName="UpdateGameKeeperAddInVersion" AssemblyFile="MK6.GameKeeper.Tasks.dll" />
   <UsingTask TaskName="CopyApplicationConfigTransforms" AssemblyFile="MK6.GameKeeper.Tasks.dll" />
-  
+
   <PropertyGroup>
     <BuildDependsOn>
       UpdateGameKeeperVersion;
       $(BuildDependsOn);
-      CopyConfigurationTransforms
+      GameKeeperPostBuild
     </BuildDependsOn>
   </PropertyGroup>
 
@@ -15,12 +15,12 @@
     <UpdateGameKeeperVersion Condition="'$(UpdateGameKeeperVersion)'==''">false</UpdateGameKeeperVersion>
     <GameKeeperServiceVersion Condition="'$(GameKeeperServiceVersion)' == ''"></GameKeeperServiceVersion>
   </PropertyGroup>
-  
+
   <Target Name="UpdateGameKeeperVersion" Condition="$(UpdateGameKeeperVersion)">
     <ItemGroup>
       <AssemblyInfo Include="**\AssemblyInfo.cs" />
     </ItemGroup>
-    
+
     <GetAssemblyVersionInfo AssemblyFiles="@(AssemblyInfo)">
       <Output TaskParameter="Version" PropertyName="GameKeeperAssemblyVersion"/>
     </GetAssemblyVersionInfo>
@@ -32,15 +32,23 @@
 
     <UpdateGameKeeperAddInVersion CodeFiles="@(Compile)" Version="$(GameKeeperServiceVersion)" />
   </Target>
-  
+
   <Target Name="CopyConfigurationTransforms">
     <ItemGroup>
       <ConfigFiles Include="*.config" />
     </ItemGroup>
-    
-    <CopyApplicationConfigTransforms 
-      ConfigFiles="@(ConfigFiles)" 
-      OutputDirectory="$(OutputPath)" 
+
+    <CopyApplicationConfigTransforms
+      ConfigFiles="@(ConfigFiles)"
+      OutputDirectory="$(OutputPath)"
       AssemblyTargetName="$(TargetFileName)" />
+  </Target>
+
+  <Target Name="RemoveAddInsAssembly" Condition="'$(Configuration)' == 'Release'">
+    <Delete Files="$(TargetDir)\MK6.GameKeeper.AddIns.dll" Condition="Exists('$(TargetDir)\MK6.GameKeeper.AddIns.dll')" />
+  </Target>
+
+  <Target Name="GameKeeperPostBuild" DependsOnTargets="CopyConfigurationTransforms; RemoveAddInsAssembly">
+
   </Target>
 </Project>
