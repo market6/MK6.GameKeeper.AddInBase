@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <UsingTask TaskName="GetAssemblyVersionInfo" AssemblyFile="MK6.GameKeeper.Tasks.dll" />
+  <UsingTask TaskName="GetGameKeeperAssemblyVersionInfo" AssemblyFile="MK6.GameKeeper.Tasks.dll" />
   <UsingTask TaskName="UpdateGameKeeperAddInVersion" AssemblyFile="MK6.GameKeeper.Tasks.dll" />
-  <UsingTask TaskName="CopyApplicationConfigTransforms" AssemblyFile="MK6.GameKeeper.Tasks.dll" />
+  <UsingTask TaskName="CopyGameKeeperApplicationConfigTransforms" AssemblyFile="MK6.GameKeeper.Tasks.dll" />
 
   <PropertyGroup>
     <BuildDependsOn>
@@ -21,9 +21,9 @@
       <AssemblyInfo Include="**\AssemblyInfo.cs" />
     </ItemGroup>
 
-    <GetAssemblyVersionInfo AssemblyFiles="@(AssemblyInfo)">
+    <GetGameKeeperAssemblyVersionInfo AssemblyFiles="@(AssemblyInfo)">
       <Output TaskParameter="Version" PropertyName="GameKeeperAssemblyVersion"/>
-    </GetAssemblyVersionInfo>
+    </GetGameKeeperAssemblyVersionInfo>
     <PropertyGroup>
       <GameKeeperServiceVersion Condition="'$(GameKeeperServiceVersion)' == ''">$(GameKeeperAssemblyVersion)</GameKeeperServiceVersion>
     </PropertyGroup>
@@ -38,7 +38,7 @@
       <ConfigFiles Include="*.config" />
     </ItemGroup>
 
-    <CopyApplicationConfigTransforms
+    <CopyGameKeeperApplicationConfigTransforms
       ConfigFiles="@(ConfigFiles)"
       OutputDirectory="$(OutputPath)"
       AssemblyTargetName="$(TargetFileName)" />

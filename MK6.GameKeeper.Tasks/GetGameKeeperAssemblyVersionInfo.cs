@@ -7,7 +7,7 @@ using Microsoft.Build.Framework;
 
 namespace MK6.GameKeeper.Tasks
 {
-    public class GetAssemblyVersionInfo : AbstractTask
+    public class GetGameKeeperAssemblyVersionInfo : AbstractTask
     {
         [Required]
         public ITaskItem[] AssemblyFiles { get; set; }

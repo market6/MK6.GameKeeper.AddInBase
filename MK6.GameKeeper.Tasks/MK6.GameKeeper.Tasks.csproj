@@ -38,8 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractTask.cs" />
-    <Compile Include="GetAssemblyVersionInfo.cs" />
-    <Compile Include="CopyApplicationConfigTransforms.cs" />
+    <Compile Include="GetGameKeeperAssemblyVersionInfo.cs" />
+    <Compile Include="CopyGameKeeperApplicationConfigTransforms.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdateGameKeeperAddInVersion.cs" />
   </ItemGroup>

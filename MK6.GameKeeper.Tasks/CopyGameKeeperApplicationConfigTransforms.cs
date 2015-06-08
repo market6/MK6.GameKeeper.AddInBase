@@ -5,7 +5,7 @@ using Microsoft.Build.Framework;
 
 namespace MK6.GameKeeper.Tasks
 {
-    public class CopyApplicationConfigTransforms : AbstractTask
+    public class CopyGameKeeperApplicationConfigTransforms : AbstractTask
     {
         [Required]
         public ITaskItem[] ConfigFiles { get; set; }
